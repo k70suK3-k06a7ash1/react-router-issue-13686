@@ -91,7 +91,7 @@ export default function Home() {
           </div>
         </header>
 
-          <Suspense fallback={<>Loading</>}>
+          <Suspense fallback={<div>Loading</div>}>
           <Await resolve={nonCriticalData}>
             {(_) => (
               <MapComponent
