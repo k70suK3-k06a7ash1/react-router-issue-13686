@@ -1,5 +1,5 @@
 import type { Route } from "./+types/home";
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 import { Await, useLoaderData } from "react-router";
 import { MapComponent } from "~/features/components/map.client";
@@ -83,6 +83,13 @@ export default function Home() {
     nonCriticalData,
   
   } = useLoaderData<typeof loader>();
+
+
+    const [ isClient, setIsClient ] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
   return  <main className="flex items-center justify-center pt-16 pb-4">
       <div className="flex-1 flex flex-col items-center gap-16 min-h-0">
         <header className="flex flex-col items-center gap-9">
@@ -94,12 +101,14 @@ export default function Home() {
           <Suspense fallback={<div>Loading</div>}>
           <Await resolve={nonCriticalData}>
             {(_) => (
-              <MapComponent
+              <>
+              {isClient &&<MapComponent
                 location={{
                   lat: 35.65903601,
                   lon: 139.70137234,
                 }}
-              />
+              />}
+              </>
             )}
           </Await>
         </Suspense>

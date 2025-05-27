@@ -10,16 +10,12 @@ type Props = {
 
 export const MapComponent = ({ location }: Props) => {
 
-   const [ isClient, setIsClient ] = useState(false)
-
-  useEffect(() => {
-    setIsClient(true)
-  }, [])
+ 
 
   const position = [location.lat, location.lon];
 
   return (
-    isClient && (
+      (
     <div style={{ height: '180px', width: '100%' }}>
       <MapContainer
         // @ts-ignore
