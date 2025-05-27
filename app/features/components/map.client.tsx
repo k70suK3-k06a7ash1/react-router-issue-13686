@@ -1,4 +1,5 @@
 import L from 'leaflet';
+import { useEffect, useState } from 'react';
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 type Props = {
   location: {
@@ -8,20 +9,17 @@ type Props = {
 };
 
 export const MapComponent = ({ location }: Props) => {
-  // --- アイコンパスの手動設定 ---
-  // @ts-ignore (delete L.Icon.Default.prototype._getIconUrl; で型エラーが出る場合)
-  // biome-ignore lint/performance/noDelete: <explanation>
-  // delete L.Icon.Default.prototype._getIconUrl;
 
-  // L.Icon.Default.mergeOptions({
-  //   iconRetinaUrl: '/images/marker-icon-2x.png', // public/images/ にコピーした場合
-  //   iconUrl: '/images/marker-icon.png', // public/images/ にコピーした場合
-  //   shadowUrl: '/images/marker-shadow.png', // public/images/leaflet/ にコピーした場合
-  // });
+   const [ isClient, setIsClient ] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   const position = [location.lat, location.lon];
 
   return (
+    isClient && (
     <div style={{ height: '180px', width: '100%' }}>
       <MapContainer
         // @ts-ignore
@@ -42,5 +40,6 @@ export const MapComponent = ({ location }: Props) => {
         </Marker>
       </MapContainer>
     </div>
+    )
   );
 };
